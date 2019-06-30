@@ -1,12 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import anything from './components/listings/Listings';
+import configureStore from './redux/store/configureStore';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import EditListing from './components/listings/Edit-listing';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = configureStore(); // You can also pass in an initialState here
+render(
+    <Provider store={store}>
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+        
+
+        <Router>
+            
+            <Route path="/" exact component={anything} />
+            <Route path="/edit/:id" component={EditListing} />
+        </Router>
+        
+    </Provider>,
+    document.getElementById('root')
+);
