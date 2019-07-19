@@ -2,6 +2,8 @@ export default class {
     
     static getData(uri){
 
+        return fetch(uri);
+
 
     }
 

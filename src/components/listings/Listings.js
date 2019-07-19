@@ -3,13 +3,14 @@ import {connect} from 'react-redux';
 import {listingsFetchData, deleteListing} from '../../redux/actions/listings';
 
 import ListingTitle from './Listing-title';
+import Header from '../Header';
 
 
  class Listings extends Component {
 
     componentDidMount(){
 
-        this.props.fetchData('http://127.0.0.1:8085/api/listings');
+        this.props.fetchData();
 
     }
 
@@ -30,8 +31,12 @@ import ListingTitle from './Listing-title';
         }
 
         return (
-            
-            this.props.listings.map( listing => <ListingTitle key={listing.id} listing={listing}/>)
+            <>
+            <Header/>
+                <div className="container">
+                    {this.props.listings.map( listing => <ListingTitle key={listing.id} listing={listing}/>)}
+                </div>
+            </>
         );
     }
 }
@@ -48,7 +53,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToprops = (dispatch)=>{
 
     return {
-        fetchData: (url)=> dispatch(listingsFetchData(url)),
+        fetchData: ()=> dispatch(listingsFetchData()),
         deleteListing: (url)=>dispatch(deleteListing(url))
     };
 

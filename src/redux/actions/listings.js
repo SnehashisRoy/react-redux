@@ -39,22 +39,38 @@ export function listingsFetchSuccess(listings){
 
 }
 
-export function listingsFetchData(url){
+export function listingsFetchData(){
 
     return (dispatch)=>{
-        dispatch(listingsIsLoading(true));
+        // dispatch(listingsIsLoading(true));
 
-        fetch(url)
-             .then((response) => {
-                 if(!response.ok){
-                     throw Error(response.statusText);
-                 }
-                 dispatch(listingsIsLoading(false));
-                 return response;
-             })
-             .then((response)=> response.json())
-             .then((listings) => dispatch(listingsFetchSuccess(listings)) )
-             .catch(()=> listingsErrored(true));
+        // fetch(url)
+        //      .then((response) => {
+        //          if(!response.ok){
+        //              throw Error(response.statusText);
+        //          }
+        //          dispatch(listingsIsLoading(false));
+        //          return response;
+        //      })
+        //      .then((response)=> response.json())
+        //      .then((listings) => dispatch(listingsFetchSuccess(listings)) )
+        //      .catch(()=> listingsErrored(true));
+        dispatch(listingsIsLoading(true));
+        Listings.getListings()
+        .then( 
+            response=> response.json(),
+            error => { 
+                console.log('An error has occured.', error);
+                dispatch(listingsIsLoading(false));
+                dispatch(listingsErrored(true))
+
+            }
+            )
+        .then((listings) => {
+            dispatch(listingsIsLoading(false));
+            dispatch(listingsFetchSuccess(listings));
+            
+        } );
     }
 
 

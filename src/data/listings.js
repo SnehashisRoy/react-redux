@@ -4,7 +4,10 @@ import Fetch from './fetch';
 const API_BASE_ADDRESS = 'http://127.0.0.1:8085/api/';
 
 export default class Listings {
-    static geListing() {
+    
+    static getListings() {
+        const uri = API_BASE_ADDRESS +'listings';
+        return Fetch.getData(uri);
         
     }
 
