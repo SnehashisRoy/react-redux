@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {listingsFetchData, deleteListing} from '../../redux/actions/listings';
 
 import ListingTitle from './Listing-title';
-import Header from '../Header';
 
 
  class Listings extends Component {
@@ -14,12 +13,6 @@ import Header from '../Header';
 
     }
 
-    handleDeleteListing(id){
-
-        console.log(id);
-
-
-    }
 
     render(){
 
@@ -32,9 +25,9 @@ import Header from '../Header';
 
         return (
             <>
-            <Header/>
+                <div className="jumbotron text-center"> <h3>List of Listings</h3></div>
                 <div className="container">
-                    {this.props.listings.map( listing => <ListingTitle key={listing.id} listing={listing}/>)}
+                        {this.props.listings.map( listing => <ListingTitle key={listing.id} listing={listing}/>)}
                 </div>
             </>
         );

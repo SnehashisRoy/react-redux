@@ -16,3 +16,11 @@ code {
 .bgprimary {
   background-color: #001f3f;
 }
+
+.txt-primary {
+  color: #001f3f; 
+}
+
+.pointer {
+  cursor: pointer;
+}

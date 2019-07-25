@@ -176,23 +176,30 @@ export function listingDeleted(id){
         }
 }
 
-export function deleteListing(url){
+export function deleteListing(id){
 
-    return (dispatch) => {
-
+    return (dispatch)=>{
+        
         dispatch(listingIsDeleting(true));
+        Listings.deleteListing(id)
+        .then( 
+            response=> response.json(),
+            error => { 
+                console.log('An error has occured.', error);
+                dispatch(listingIsDeleting(false));
+                dispatch(listingDeletingErrored(true));
 
-        fetch(url)
-        .then((response) => {
-            if(!response.ok){
-                throw Error(response.statusText);
             }
+            )
+        .then((listings) => {
             dispatch(listingIsDeleting(false));
-            return response;
-        })
-        .then((response)=> response.json())
-        .then((listing) => dispatch(listingDeleted(listing.id)) )
-        .catch(()=> listingDeletingErrored(true));
+            dispatch(listingDeleted(id));
+            
+        } );
     }
+
+
+
+    
 
 }

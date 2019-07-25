@@ -19,10 +19,7 @@ const ListingSchema = Yup.object().shape({
     .required('Required'),
 });
 
-
-
-
- class EditListing extends Component {
+class EditListing extends Component {
 
     steps=2;
 
@@ -62,9 +59,8 @@ const ListingSchema = Yup.object().shape({
         
     render(){
 
-        console.log(this.state.formValues);
-
         const formValues = this.state.formValues;
+        
 
         if (this.props.listingUpdateErrored) {
             return <p>Sorry! There was an error loading the items</p>;
@@ -78,6 +74,9 @@ const ListingSchema = Yup.object().shape({
             case 1:
                     return (
                         <>
+                        <div className="jumbotron text-center">
+                            <strong>Listing:</strong> {formValues.title}
+                        </div>
                             <Formik
                             initialValues={{
                                 id : formValues.id,
@@ -91,26 +90,34 @@ const ListingSchema = Yup.object().shape({
 
                                         this.nextStep(values);
 
-                                        console.log(this.state);
-                                        //  this.props.updateListing(values);
                                         actions.setSubmitting(false);
                                 }
                             }
                             enableReinitialize= {true}
                             render = {({ values, errors, status, touched, isSubmitting, validateForm }) => (
-                                    <Form>
-                                        <Field type="text" name="title" />
-                                        {errors.title && touched.title && <div>{errors.title}</div>}
-                                        <Field type="text" name="address" />
-                                        {errors.address && touched.address && <div>{errors.address}</div>}
-                                        <label htmlFor="description">Description</label>
-                                        <Field component='textarea' type="text" name="description" rows="5" id="description"/>
-                                        {errors.description && touched.description && <div>{errors.description}</div>}
-                                        
-                                        <button type="submit" disabled={isSubmitting}>
-                                            Submit
-                                        </button>
-                                    </Form>
+                                <div className="container">
+                                    
+                                    <div className="row justify-content-center">
+                                        <div className="col-12 col-md-6">
+                                            <Form>
+                                                <label htmlFor="title">Title</label>
+                                                <Field type="text" name="title" className="form-control" id="title"  />
+                                                {errors.title && touched.title && <div>{errors.title}</div>}
+                                                <label htmlFor="address">Address</label>
+                                                <Field type="text" name="address" className="form-control" id="address"/>
+                                                {errors.address && touched.address && <div>{errors.address}</div>}
+                                                <label htmlFor="description">Description</label>
+                                                <Field component='textarea' type="text" name="description" rows="5" id="description" className="form-control"/>
+                                                {errors.description && touched.description && <div>{errors.description}</div>}
+                                                <div className="text-right pt-5">
+                                                    <button type="submit" disabled={isSubmitting} className="btn btn-success">
+                                                        Next
+                                                    </button>
+                                                </div>
+                                            </Form>
+                                      </div>
+                                    </div>
+                                </div>
                                 )}
                             />
                         </>
@@ -119,6 +126,9 @@ const ListingSchema = Yup.object().shape({
             case 2:
                     return (
                         <>
+                            <div className="jumbotron text-center">
+                                <strong>Listing:</strong> {formValues.title}
+                            </div>
                             <Formik
                             initialValues={{
                                 bedroom : formValues.bedroom,
@@ -142,40 +152,87 @@ const ListingSchema = Yup.object().shape({
                             }
                             enableReinitialize= {true}
                             render = {({ values, errors, status, touched, isSubmitting, validateForm }) => (
-                                    <Form>
-                                        
-                                        <Field type='text' component="select" name="bedroom">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </Field>
-                                        <Field type='text' component="select" name="bathroom">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </Field>
-                                        
-                                        <Field type="text" value={values.price || ''} name="price" />
-                                        {errors.price && touched.price && <div>{errors.price}</div>}
-                                        <Field type="text" value={values.price || ''} name="size" />
-                                        {errors.size && touched.size && <div>{errors.price}</div>}
-            
-                                        <Field type='checkbox' name='furnished'/>
-                                        <Field type='checkbox' name='pet_friendly'/>
-                                        <Field type='text' component="select" name="type">
-                                            <option value="main floor">Main Floor</option>
-                                            <option value="basement">Basment</option>
-                                            <option value="full house">Full House</option>
-                                        </Field>
-                                        {errors.type && touched.type && <div>{errors.type}</div>}
-                                        <div onClick={this.prevStep}>
-                                            Previous
+                                <div className="container">
+                                    <div className="row justify-content-center">
+                                        <div className="col-12 col-md-6">
+                                       
+                                            <Form>
+                                                <div className="row mt-3">
+                                                    <div className="col">
+                                                        <label htmlFor="bedroom" >Bedroom</label>
+                                                        
+                                                        <Field type='text' component="select" name="bedroom" className="form-control" id="bedroom">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </Field>
+                                                    </div>
+
+                                                    <div className="col">
+                                                        <label htmlFor="bedroom" >Bedroom</label>
+                                                        <Field type='text' component="select" name="bathroom" className="form-control">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        </Field>
+                                                    </div>
+                                                </div>
+
+                                                <div className="row mt-3">
+                                                    <div className="col">
+                                                    <Field type="text" value={values.price || ''} name="price" className="form-control" />
+                                                    {errors.price && touched.price && <div>{errors.price}</div>}
+
+                                                    </div>
+                                                    <div className="col">
+                                                    <Field type="text" value={values.price || ''} name="size" className="form-control" />
+                                                    {errors.size && touched.size && <div>{errors.price}</div>}
+
+                                                    </div>
+                                                </div>
+
+                                                <div className="row mt-3">
+                                                    <div className="col">
+                                                        <Field type='checkbox' name='furnished'/>
+
+                                                    </div>
+                                                    <div className="col">
+                                                        <Field type='checkbox' name='pet_friendly'/>
+                                                    </div>
+                                                </div>
+
+                                                <div className="row justify-content-center mt-3">
+                                                    <div className="col-8">
+                                                    <Field type='text' component="select" name="type">
+                                                        <option value="main floor">Main Floor</option>
+                                                        <option value="basement">Basment</option>
+                                                        <option value="full house">Full House</option>
+                                                    </Field>
+                                                    {errors.type && touched.type && <div>{errors.type}</div>}
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div className="row mt-3">
+                                                    <div className="col">
+                                                        <div onClick={this.prevStep} className="btn btn-success">
+                                                            Previous
+                                                        </div>
+
+                                                    </div>
+                                                    <div className="col">
+                                                        <button type="submit" disabled={isSubmitting} className="btn btn-success" style={{float: 'right'}}>
+                                                            Submit
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            
+                                            </Form>
                                         </div>
-            
-                                        <button type="submit" disabled={isSubmitting}>
-                                            Submit
-                                        </button>
-                                    </Form>
+                                    </div>
+                                </div>
                                 )}
                             />
                         </>

@@ -18,4 +18,12 @@ export default class Listings {
         return Fetch.postData(uri, values);
 
     }
+
+    static deleteListing(id){
+
+        const uri = API_BASE_ADDRESS +'listing/delete/'+id;
+        return Fetch.getData(uri);
+
+
+    }
 }
