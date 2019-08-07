@@ -3,8 +3,9 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import listings from './components/listings/Listings';
 import configureStore from './redux/store/configureStore';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import EditListing from './components/listings/Edit-listing';
+import UploadImages from './components/listings/Upload-images';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Header from './components/Header';
@@ -16,7 +17,7 @@ render(
         <Router>
             <Route path="/" exact component={listings} />
             <Route path="/edit/:id" component={EditListing} />
-            
+            <Route path="/upload-images/:id" component={UploadImages} />
         </Router>
     </Provider>,
     document.getElementById('root')

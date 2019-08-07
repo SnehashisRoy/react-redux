@@ -24,11 +24,11 @@ class ListTitle extends Component {
         </div>
         <div className="col-2">
         
-          <a onClick={()=>this.props.deleteListing(this.props.listing.id)} ><i class="far fa-trash-alt"></i></a>
+          <a onClick={()=>this.props.deleteListing(this.props.listing.id)} ><i className="far fa-trash-alt"></i></a>
         </div>
         <div className="col-2">
        
-          <Link  to={`/edit/${this.props.listing.id}`}> <i class="far fa-edit"></i></Link>
+          <Link  to={`/edit/${this.props.listing.id}`}> <i className="far fa-edit"></i></Link>
         </div>
       </div>
    );

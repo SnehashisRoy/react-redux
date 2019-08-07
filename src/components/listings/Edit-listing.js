@@ -240,7 +240,7 @@ class EditListing extends Component {
                     )
             case 3:
                 return(
-                    <Redirect to='/'/>
+                    <Redirect to={`/upload-images/${formValues.id}`}/>
                 )
             default:
                 return null;
