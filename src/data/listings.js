@@ -19,10 +19,27 @@ export default class Listings {
 
     }
 
+    static createListing(values){
+        
+        const uri = API_BASE_ADDRESS+ 'listing/create' ;
+
+        return Fetch.postData(uri, values);
+
+    }
+
     static deleteListing(id){
 
         const uri = API_BASE_ADDRESS +'listing/delete/'+id;
         return Fetch.getData(uri);
+
+
+    }
+
+    static uploadImages(values){
+       
+        const uri = API_BASE_ADDRESS+ 'listing/upload/'+ values.id ;
+
+        return Fetch.postData(uri, values);
 
 
     }

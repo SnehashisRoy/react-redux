@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import {connect} from 'react-redux';
-import {updateListing} from '../../redux/actions/listings';
+import {updateListing, createListing} from '../../redux/actions/listings';
 
 import * as Yup from 'yup';
 
@@ -33,7 +33,7 @@ class EditListing extends Component {
     }
 
     nextStep(values){
-
+        
         this.setState((state)=>{
 
             state.step += 1;
@@ -41,7 +41,12 @@ class EditListing extends Component {
 
 
             if(state.step == this.steps+1){
-                this.props.updateListing(state.formValues);
+                if(this.props.listing.id){
+                    this.props.updateListing(state.formValues);
+                }else{
+                    this.props.createListing(state.formValues);
+                }
+               
             }
 
             return state;
@@ -59,6 +64,8 @@ class EditListing extends Component {
         
     render(){
 
+        console.log(this.state.formValues);
+
         const formValues = this.state.formValues;
         
 
@@ -75,14 +82,14 @@ class EditListing extends Component {
                     return (
                         <>
                         <div className="jumbotron text-center">
-                            <strong>Listing:</strong> {formValues.title}
+                            <strong>Listing:</strong> {formValues.title || 'Create a new listing'}
                         </div>
                             <Formik
                             initialValues={{
-                                id : formValues.id,
-                                title : formValues.title,
-                                address : formValues.address,
-                                description : formValues.description,
+                                id : formValues.id || '',
+                                title : formValues.title || '',
+                                address : formValues.address || '',
+                                description : formValues.description || '',
                              }}
                             validationSchema={ListingSchema} 
                             onSubmit = { 
@@ -131,14 +138,14 @@ class EditListing extends Component {
                             </div>
                             <Formik
                             initialValues={{
-                                bedroom : formValues.bedroom,
-                                bathroom : formValues.bathroom ,
-                                furnished : formValues.furnished ,
-                                parking : formValues.furnished,
-                                pet_friendly : formValues.pet_friendly,
-                                price : formValues.price,
-                                size : formValues.size,
-                                type : formValues.type
+                                bedroom : formValues.bedroom || '',
+                                bathroom : formValues.bathroom || '' ,
+                                furnished : formValues.furnished || '' ,
+                                parking : formValues.furnished || '',
+                                pet_friendly : formValues.pet_friendly || '',
+                                price : formValues.price || '',
+                                size : formValues.size || '',
+                                type : formValues.type || ''
                              }}
                            // validationSchema={ListingSchema} 
                             onSubmit = { 
@@ -253,18 +260,32 @@ class EditListing extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 
-    const {listings, listingUpdateErrored, listingIsUpdating} = state;
+    const {listings, listingUpdateErrored, listingIsUpdating,listingCreateErrored, listingIsCreating} = state;
     const {match} = ownProps;
+
+    let listing;
+
+    if(match.params.id == 'create'){
+        listing = {
+            id : null,
+            title: 'New listing'
+        }
+    }else{
+       listing =  listings.find(val => val.id == match.params.id );
+    }
     return {
 
-        listing: listings.find(val => val.id == match.params.id ),
+        listing: listing,
         listingUpdateErrored: listingUpdateErrored,
-        listingIsUpdating: listingIsUpdating
+        listingIsUpdating: listingIsUpdating,
+        listingCreateErrored: listingCreateErrored,
+        listingIsCreating: listingIsCreating
     }
 }
 const mapDispatchToProps = (dispatch)=> {
     return {
-        updateListing : (payload) =>  dispatch(updateListing(payload))
+        updateListing : (payload) =>  dispatch(updateListing(payload)),
+        createListing : (payload) => dispatch(createListing(payload))
     }
 }
 

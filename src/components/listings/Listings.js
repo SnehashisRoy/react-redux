@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {listingsFetchData, deleteListing} from '../../redux/actions/listings';
+import {Link} from 'react-router-dom';
 
 import ListingTitle from './Listing-title';
 
@@ -27,6 +28,7 @@ import ListingTitle from './Listing-title';
             <>
                 <div className="jumbotron text-center"> <h3>List of Listings</h3></div>
                 <div className="container">
+                <Link  to={`/edit/create`}>create</Link>
                         {this.props.listings.map( listing => <ListingTitle key={listing.id} listing={listing}/>)}
                 </div>
             </>

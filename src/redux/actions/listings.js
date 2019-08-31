@@ -6,7 +6,13 @@ import {LISTINGS_ERRORED,
         LISTING_DELETED,
         LISTING_UPDATE_ERRORED,
         LISTING_IS_UPDATING,
-        LISTING_UPDATED
+        LISTING_UPDATED,
+        UPLOAD_IMAGES_ERRORED,
+        IMAGES_ARE_UPLOADING,
+        IMAGES_UPLOADED,
+        CREATE_LISTING_ERRORED,
+        LISTING_IS_CREATING,
+        LISTING_CREATED
         } from './actionTypes';
 import Listings from '../../data/listings';
 
@@ -147,6 +153,76 @@ export function updateListing(payload){
 
 }
 
+//create listing
+
+export function listingCreateErrored(bool){
+    return {
+        type: CREATE_LISTING_ERRORED,
+        hasErrored: bool
+
+    }
+}
+
+export function listingIsCreating(bool){
+    return {
+        type: LISTING_IS_CREATING,
+        isLoading: bool
+    }
+}
+
+export function listingCreatedSuccess(listing){
+    return {
+        type: LISTING_CREATED,
+        listing
+    }
+}
+
+export function createListing(payload){
+
+
+    return (dispatch) => {
+
+        dispatch(listingIsCreating(true));
+        Listings.createListing(payload)
+        .then(
+            response=> response.json(),
+            error => { 
+                console.log('An error has occured.', error);
+                dispatch(listingIsCreating(false));
+
+            }
+            )
+        .then((listing) => {
+            dispatch(listingIsCreating(false)); //weird solution to fight a bug in Formik , the action had to be called later
+            dispatch(listingCreatedSuccess(listing));
+            
+        } );
+               
+
+        // dispatch(listingIsUpdating(true));
+        // http$.post('http://banglatoronto.ca/api/listing/edi/'+ payload.id, payload).subscribe(
+        //     resp => {
+        //         if(typeof(resp) == 'string'){
+        //             dispatch(listingIsUpdating(false));
+        //             dispatch( listingUpdateErrored(true));
+        //             setTimeout(()=>{
+        //                 dispatch( listingUpdateErrored(false));
+        //             }, 2000 )
+        //         }else{
+        //             dispatch(listingIsUpdating(false));
+        //             dispatch(listingUpdatedSuccess(resp.response.data));
+        //         };
+        //     },
+        //     err => {},
+        //     ()=> {console.log('completed')}
+
+        // )
+
+
+    }
+
+}
+
 
 // deleting the listings
 
@@ -198,8 +274,55 @@ export function deleteListing(id){
         } );
     }
 
+}
 
-
-    
+export function uploadImagesErrored(bool){
+      return {
+          type: UPLOAD_IMAGES_ERRORED,
+          hasErrored: bool
+      }
 
 }
+
+export function imagesAreUploading(bool){
+     return {
+         type: IMAGES_ARE_UPLOADING,
+         isLoading: bool
+     }
+
+}
+
+export function imagesUploaded(listing){
+    return {
+        type: IMAGES_UPLOADED,
+        listing
+    }
+}
+
+export function uploadImages(payload){
+
+    console.log(payload);
+
+    return (dispatch)=>{
+
+        dispatch(imagesAreUploading(true));
+        Listings.uploadImages(payload)
+        .then(
+            response=> response.json(),
+            error => { 
+                console.log('An error has occured.', error);
+                dispatch(imagesAreUploading(false));
+
+            }
+            )
+        .then((listing) => {
+            dispatch(imagesAreUploading(false)); //weird solution to fight a bug in Formik , the action had to be called later
+            dispatch(imagesUploaded(listing));
+            
+        } );
+
+    }
+
+}
+
+

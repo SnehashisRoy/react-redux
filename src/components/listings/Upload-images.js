@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {uploadImages} from '../../redux/actions/listings'
 import {connect} from 'react-redux';
 
 class UploadImages extends Component {
@@ -12,8 +13,6 @@ class UploadImages extends Component {
                 images: ['']
             }, 
             dynamicFields:['file1']
-            
-
 
         }
 
@@ -56,6 +55,13 @@ class UploadImages extends Component {
 
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.props.uploadImages( {...this.state.formValues, id: this.props.listing.id});
+        
+        
+    }
+
    
 
 
@@ -79,7 +85,7 @@ class UploadImages extends Component {
                             )
                         })}
                     </div>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                     {this.state.dynamicFields.map((img, index) => (
                         <div>
                         <input name={img} type="file" onChange={(event)=>{
@@ -91,8 +97,10 @@ class UploadImages extends Component {
                         <div onClick={(index) => this.removeFile(index)} className="btn btn-danger">remove</div>
                         </div>
                     ) )}
-                    </form>
                     <div onClick={this.addFile} className="btn btn-success">Add Image</div>
+                    <button className="btn btn-success">Submit</button>
+                    </form>
+                    
                     </div>
 
                 
@@ -116,5 +124,11 @@ const mapStateToProps = (state, ownProps)=>{
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        uploadImages : (payload) => dispatch(uploadImages(payload))
+    }
+}
 
-export default connect(mapStateToProps)(UploadImages);
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadImages);
