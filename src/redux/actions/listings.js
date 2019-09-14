@@ -12,11 +12,20 @@ import {LISTINGS_ERRORED,
         IMAGES_UPLOADED,
         CREATE_LISTING_ERRORED,
         LISTING_IS_CREATING,
-        LISTING_CREATED
+        LISTING_CREATED,
+        LISTING_BEING_UPDATED
         } from './actionTypes';
 import Listings from '../../data/listings';
 
 //import http$ from '../../http$';
+
+
+export function listingBeingUpdated(id){
+    return {
+        type: LISTING_BEING_UPDATED,
+        id
+    }
+}
 
 // fetching listings
 export function listingsErrored(bool){
@@ -125,6 +134,8 @@ export function updateListing(payload){
         .then((listing) => {
             dispatch(listingIsUpdating(false)); //weird solution to fight a bug in Formik , the action had to be called later
             dispatch(listingUpdatedSuccess(listing));
+            dispatch(listingBeingUpdated(listing.id));
+            
             
         } );
                
@@ -195,6 +206,8 @@ export function createListing(payload){
         .then((listing) => {
             dispatch(listingIsCreating(false)); //weird solution to fight a bug in Formik , the action had to be called later
             dispatch(listingCreatedSuccess(listing));
+            dispatch(listingBeingUpdated(listing.data.id));
+            
             
         } );
                

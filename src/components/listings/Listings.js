@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {listingsFetchData, deleteListing} from '../../redux/actions/listings';
 import {Link} from 'react-router-dom';
 
+
 import ListingTitle from './Listing-title';
 
 

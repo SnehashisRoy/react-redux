@@ -246,8 +246,13 @@ class EditListing extends Component {
                         
                     )
             case 3:
+                if(!this.props.listingBeingUpdated){
+                    return(
+                        <div>loading...</div>
+                    )
+                }
                 return(
-                    <Redirect to={`/upload-images/${formValues.id}`}/>
+                    <Redirect to={`/upload-images/`}/>
                 )
             default:
                 return null;
@@ -260,7 +265,7 @@ class EditListing extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 
-    const {listings, listingUpdateErrored, listingIsUpdating,listingCreateErrored, listingIsCreating} = state;
+    const {listings, listingUpdateErrored, listingIsUpdating,listingCreateErrored, listingIsCreating, listingBeingUpdated} = state;
     const {match} = ownProps;
 
     let listing;
@@ -279,7 +284,8 @@ const mapStateToProps = (state, ownProps) => {
         listingUpdateErrored: listingUpdateErrored,
         listingIsUpdating: listingIsUpdating,
         listingCreateErrored: listingCreateErrored,
-        listingIsCreating: listingIsCreating
+        listingIsCreating: listingIsCreating,
+        listingBeingUpdated: listingBeingUpdated
     }
 }
 const mapDispatchToProps = (dispatch)=> {

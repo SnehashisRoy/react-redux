@@ -12,7 +12,8 @@ import {LISTINGS_ERRORED,
         IMAGES_UPLOADED,
         CREATE_LISTING_ERRORED,
         LISTING_IS_CREATING,
-        LISTING_CREATED
+        LISTING_CREATED,
+        LISTING_BEING_UPDATED
 
         } from '../actions/actionTypes';
 
@@ -156,5 +157,15 @@ export function imageUploadingErrored(state=false, action){
             return action.hasErrored;
         default:
             return state; 
+    }
+}
+
+export function listingBeingUpdated(state=null, action){
+    switch(action.type){
+        case LISTING_BEING_UPDATED:
+            return action.id;
+        default:
+            return state;
+
     }
 }

@@ -17,7 +17,7 @@ render(
         <Router>
             <Route path="/" exact component={listings} />
             <Route path="/edit/:id" component={EditListing} />
-            <Route path="/upload-images/:id" component={UploadImages} />
+            <Route path="/upload-images/" component={UploadImages} />
         </Router>
     </Provider>,
     document.getElementById('root')

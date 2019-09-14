@@ -113,14 +113,14 @@ class UploadImages extends Component {
 
 }
 
-const mapStateToProps = (state, ownProps)=>{
+const mapStateToProps = (state)=>{
 
-    const {listings} = state;
-    const {match} = ownProps;
+    const {listings, listingBeingUpdated} = state;
 
+    console.log(listingBeingUpdated);
 
     return {
-        listing : listings.find( v =>  v.id == match.params.id)
+        listing : listings.find( v =>  v.id == listingBeingUpdated)
     }
 }
 
