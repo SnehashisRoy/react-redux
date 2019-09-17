@@ -24,13 +24,39 @@ import ListingTitle from './Listing-title';
         if (this.props.isLoading) {
             return <p>Loading…</p>;
         }
+        const listings =   this.props.listings;
+        const hasListing = listings.length == 0 ? false : true;
+
+        
 
         return (
+            
             <>
-                <div className="jumbotron text-center"> <h3>List of Listings</h3></div>
-                <div className="container">
-                <Link  to={`/edit/create`}>create</Link>
-                        {this.props.listings.map( listing => <ListingTitle key={listing.id} listing={listing}/>)}
+            <div className="jumbotron text-center"> <h3>List of Listings</h3></div>
+                <div className="container" >
+            {
+                hasListing && 
+                
+                <div className="row mb-2">
+                    <div className="col-8">
+                        <span style={{color: '#001f3f', fontWeight: 700}}><u>Ad</u></span>
+                    </div>
+                    <div className="col-2">
+                    
+                         <span style={{color: '#001f3f', fontWeight: 700}}><u>Create</u></span>
+                    </div>
+                    <div className="col-2">
+                
+                         <span style={{color: '#001f3f', fontWeight: 700}}><u>Delete</u></span>
+                    </div>
+                </div>
+            }
+               { hasListing && listings.map( listing => <ListingTitle key={listing.id} listing={listing}/>)}
+                <Link className="btn btn-success mt-3" to={`/edit/create`}>Create an Ad</Link>
+
+                          
+                
+                        
                 </div>
             </>
         );
