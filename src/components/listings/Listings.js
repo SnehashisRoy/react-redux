@@ -43,11 +43,11 @@ import ListingTitle from './Listing-title';
                     </div>
                     <div className="col-2">
                     
-                         <span style={{color: '#001f3f', fontWeight: 700}}><u>Create</u></span>
+                         <span style={{color: '#001f3f', fontWeight: 700}}><u>Delete</u></span>
                     </div>
                     <div className="col-2">
                 
-                         <span style={{color: '#001f3f', fontWeight: 700}}><u>Delete</u></span>
+                         <span style={{color: '#001f3f', fontWeight: 700}}><u>Edit</u></span>
                     </div>
                 </div>
             }

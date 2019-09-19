@@ -80,7 +80,7 @@ class UploadImages extends Component {
                         {this.props.listing.images.map(image => {
                             return (
                                 <div className="col col-sm-4 col-md-3">
-                                    <img src={image.image_url} className="img-fluid" />
+                                    <img src={ 'http://localhost:8085' + image.image_url} className="img-fluid" />
                                 </div>
                             )
                         })}
