@@ -44,14 +44,27 @@ class UploadImages extends Component {
     handleChange(event, index) {
 
         const file = event.target.files[0]; // this was done because setState in asynchronous
+         
+        const reader = new FileReader();
+ 
+        if(event.target.files && event.target.files.length) {
+          const [file] = event.target.files;
+          reader.readAsDataURL(file);
+    
+          
+      
+          reader.onload = () => {
 
-        this.setState((state)=>{
-                    
-                    state.formValues.images.splice(index, 1, file.name);
-                    console.log(state);
-                    return state;
+            this.setState((state)=>{
+                state.formValues.images.splice(index, 1, reader.result);
+                console.log(state);
+                return state;   
 
-                            })
+                        })
+           
+          };
+        }
+
 
     }
 
