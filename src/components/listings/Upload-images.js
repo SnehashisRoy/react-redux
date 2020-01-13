@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {uploadImages} from '../../redux/actions/listings'
+import {uploadImages, deleteImage} from '../../redux/actions/listings'
 import {connect} from 'react-redux';
+import Images from './Images';
 
 class UploadImages extends Component {
 
@@ -18,7 +19,8 @@ class UploadImages extends Component {
 
     }
 
-    addFile = ()=>{
+    addFile = (e)=>{
+        
         this.setState( (state) => {
 
             state.dynamicFields.push("");
@@ -84,20 +86,7 @@ class UploadImages extends Component {
 
         return(
             <>
-                <div className="jumbotron text-center">
-                   <h2> Images For The Listing </h2>
-                </div>
-
-                <div className="container">
-                    <div className="row">
-                        {this.props.listing.images.map(image => {
-                            return (
-                                <div className="col col-sm-4 col-md-3">
-                                    <img src={ 'http://localhost:8085' + image.image_url} className="img-fluid" />
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <Images/>
                     <form onSubmit={this.handleSubmit}>
                     {this.state.dynamicFields.map((img, index) => (
                         <div>
@@ -114,9 +103,6 @@ class UploadImages extends Component {
                     <button className="btn btn-success">Submit</button>
                     </form>
                     
-                    </div>
-
-                
                 
                     
             </>
@@ -130,7 +116,6 @@ const mapStateToProps = (state)=>{
 
     const {listings, listingBeingUpdated} = state;
 
-    console.log(listingBeingUpdated);
 
     return {
         listing : listings.find( v =>  v.id == listingBeingUpdated)
@@ -139,7 +124,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        uploadImages : (payload) => dispatch(uploadImages(payload))
+        uploadImages : (payload) => dispatch(uploadImages(payload)), 
     }
 }
 

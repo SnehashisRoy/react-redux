@@ -43,4 +43,12 @@ export default class Listings {
 
 
     }
+
+    static deleteImage(id){
+
+        const uri = API_BASE_ADDRESS+ 'listing/remove-image/'+ id ;
+
+        return Fetch.getData(uri);
+        
+    }
 }

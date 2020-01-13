@@ -13,7 +13,8 @@ import {LISTINGS_ERRORED,
         CREATE_LISTING_ERRORED,
         LISTING_IS_CREATING,
         LISTING_CREATED,
-        LISTING_BEING_UPDATED
+        LISTING_BEING_UPDATED, 
+        IMAGE_DELETED
         } from './actionTypes';
 import Listings from '../../data/listings';
 
@@ -212,25 +213,6 @@ export function createListing(payload){
         } );
                
 
-        // dispatch(listingIsUpdating(true));
-        // http$.post('http://banglatoronto.ca/api/listing/edi/'+ payload.id, payload).subscribe(
-        //     resp => {
-        //         if(typeof(resp) == 'string'){
-        //             dispatch(listingIsUpdating(false));
-        //             dispatch( listingUpdateErrored(true));
-        //             setTimeout(()=>{
-        //                 dispatch( listingUpdateErrored(false));
-        //             }, 2000 )
-        //         }else{
-        //             dispatch(listingIsUpdating(false));
-        //             dispatch(listingUpdatedSuccess(resp.response.data));
-        //         };
-        //     },
-        //     err => {},
-        //     ()=> {console.log('completed')}
-
-        // )
-
 
     }
 
@@ -331,6 +313,36 @@ export function uploadImages(payload){
         .then((listing) => {
             dispatch(imagesAreUploading(false)); //weird solution to fight a bug in Formik , the action had to be called later
             dispatch(imagesUploaded(listing));
+            
+        } );
+
+    }
+
+}
+
+export function imageDeleted(id){
+
+   return {
+        type: IMAGE_DELETED,
+        id
+    }
+
+}
+
+export function deleteImage(id){
+
+    return (dispatch)=>{
+
+        Listings.deleteImage(id)
+        .then(
+            response=> response.json(),
+            error => { 
+                console.log('An error has occured.', error);
+
+            }
+            )
+        .then((image) => {
+            dispatch(imageDeleted(image.id));
             
         } );
 

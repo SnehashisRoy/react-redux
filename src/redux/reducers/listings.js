@@ -13,7 +13,8 @@ import {LISTINGS_ERRORED,
         CREATE_LISTING_ERRORED,
         LISTING_IS_CREATING,
         LISTING_CREATED,
-        LISTING_BEING_UPDATED
+        LISTING_BEING_UPDATED,
+        IMAGE_DELETED
 
         } from '../actions/actionTypes';
 
@@ -68,6 +69,22 @@ export function listings(state=[], action){
                 return val;
             })
         
+        
+        }
+        case IMAGE_DELETED: {
+            let listings =  [...state];
+            return [...listings].map((val) => {
+
+                val.images.filter((img) => {
+                    if(img.id != action.id){
+                        return img;
+
+                    }
+                })
+
+                return val;
+            })
+
         }
         case LISTING_CREATED:{
             return  [...state, action.listing.data ];
